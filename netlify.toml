@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Disable secrets scanning for Firebase public API keys
+  NETLIFY_EXPERIMENTAL_BUILD_SECRETS_SCANNING = "false"
+
+# SPA redirect rules
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
