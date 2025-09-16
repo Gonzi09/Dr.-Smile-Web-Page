@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Clock, Instagram, Music2 } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Instagram, Music2, Shield } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -141,7 +141,7 @@ const Footer: React.FC = () => {
             © 2024 Dr Smile. Todos los derechos reservados.
           </p>
           
-          <div className="flex gap-6 text-sm">
+          <div className="flex items-center gap-6 text-sm">
             <a href="#" className="text-white/60 hover:text-gold transition-colors duration-300">
               Aviso de Privacidad
             </a>
@@ -151,6 +151,18 @@ const Footer: React.FC = () => {
             <a href="#" className="text-white/60 hover:text-gold transition-colors duration-300">
               Política de Cookies
             </a>
+            
+            {/* Admin Button */}
+            <motion.a
+              href="/admin"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="flex items-center gap-2 text-white/40 hover:text-gold transition-colors duration-300 text-xs"
+              title="Panel de Administración"
+            >
+              <Shield size={14} />
+              Admin
+            </motion.a>
           </div>
         </motion.div>
 
