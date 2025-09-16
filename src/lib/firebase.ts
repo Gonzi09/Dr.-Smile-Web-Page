@@ -1,16 +1,16 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
-// Configuración temporal - reemplaza con tus credenciales reales
 const firebaseConfig = {
-  apiKey: "demo-api-key",
-  authDomain: "demo-project.firebaseapp.com",
-  projectId: "demo-project-id",
-  storageBucket: "demo-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "demo-app-id"
+  apiKey: "AIzaSyCBRdN3CDpRsrKYcIkdoNHWoNtfeC9E1HI",
+  authDomain: "dr-smile-48406.firebaseapp.com",
+  projectId: "dr-smile-48406",
+  storageBucket: "dr-smile-48406.appspot.com",
+  messagingSenderId: "1081675370474",
+  appId: "1:1081675370474:web:a7961d9b8ed305f1056c93",
+  measurementId: "G-Y4787Q5WE5"
 };
 
 const app = initializeApp(firebaseConfig);
