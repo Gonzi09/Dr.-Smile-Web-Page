@@ -10,13 +10,14 @@ import {
   Image,
   MessageSquare,
   Settings,
+  type LucideIcon, // <- tipo correcto
 } from 'lucide-react';
 
 type StatCard = {
   title: string;
   count: number;
-  icon: React.ComponentType<{ size?: number; className?: string }>;
-  color: string; // tailwind bg- color class
+  icon: LucideIcon;       
+  color: string;           
   link: string;
 };
 
@@ -26,48 +27,12 @@ const AdminDashboard: React.FC = () => {
   const { data: gallery } = useCollection('gallery', false);
 
   const stats: StatCard[] = [
-    {
-      title: 'Servicios',
-      count: services.length,
-      icon: Briefcase,
-      color: 'bg-blue-500',
-      link: '/admin/services',
-    },
-    {
-      title: 'Testimonios',
-      count: testimonials.length,
-      icon: MessageSquare,
-      color: 'bg-emerald-500',
-      link: '/admin/testimonials',
-    },
-    {
-      title: 'Galería',
-      count: gallery.length,
-      icon: Image, // ✅ corregido
-      color: 'bg-purple-500',
-      link: '/admin/gallery',
-    },
-    {
-      title: 'Ubicación',
-      count: 1,
-      icon: MapPin,
-      color: 'bg-orange-500',
-      link: '/admin/location',
-    },
-    {
-      title: 'Contacto',
-      count: 1,
-      icon: Phone,
-      color: 'bg-teal-500',
-      link: '/admin/contact',
-    },
-    {
-      title: 'Ajustes',
-      count: 1,
-      icon: Settings,
-      color: 'bg-gray-700',
-      link: '/admin/settings',
-    },
+    { title: 'Servicios',   count: services.length,    icon: Briefcase,     color: 'bg-blue-500',    link: '/admin/services' },
+    { title: 'Testimonios', count: testimonials.length,icon: MessageSquare, color: 'bg-emerald-500', link: '/admin/testimonials' },
+    { title: 'Galería',     count: gallery.length,     icon: Image,         color: 'bg-purple-500',  link: '/admin/gallery' },
+    { title: 'Ubicación',   count: 1,                  icon: MapPin,        color: 'bg-orange-500',  link: '/admin/location' },
+    { title: 'Contacto',    count: 1,                  icon: Phone,         color: 'bg-teal-500',    link: '/admin/contact' },
+    { title: 'Ajustes',     count: 1,                  icon: Settings,      color: 'bg-gray-700',    link: '/admin/settings' },
   ];
 
   return (
@@ -75,9 +40,7 @@ const AdminDashboard: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Panel de administración</h1>
-          <p className="text-gray-600">
-            Administra el contenido del sitio: servicios, galería, ubicación y más.
-          </p>
+          <p className="text-gray-600">Administra el contenido del sitio: servicios, galería, ubicación y más.</p>
         </div>
       </div>
 
@@ -99,9 +62,7 @@ const AdminDashboard: React.FC = () => {
                       <h3 className="text-base font-semibold text-gray-900">{item.title}</h3>
                       <p className="mt-1 text-3xl font-bold text-gray-900">{item.count}</p>
                     </div>
-                    <div
-                      className={`flex h-12 w-12 items-center justify-center rounded-lg text-white ${item.color}`}
-                    >
+                    <div className={`flex h-12 w-12 items-center justify-center rounded-lg text-white ${item.color}`}>
                       <Icon size={22} />
                     </div>
                   </div>
