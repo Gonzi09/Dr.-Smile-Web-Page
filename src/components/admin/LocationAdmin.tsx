@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSettings, useFirestoreCRUD } from '/Users/nicolasgonzalez/Desktop/dr-smile/src/hooks/useFirestore.ts';
+import { useSettings, useFirestoreCRUD } from '../../hooks/useFirestore';
 import { motion } from 'framer-motion';
 import { MapPin, Navigation, Save, ExternalLink, Loader2, CheckCircle } from 'lucide-react';
 import { useForm } from 'react-hook-form';

@@ -6,7 +6,7 @@ import {
   onAuthStateChanged 
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, googleProvider, db } from '../lib/Firebase.ts';
+import { auth, googleProvider, db } from '../lib/firebase.ts';
 
 interface UserData {
   uid: string;

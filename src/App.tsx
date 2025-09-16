@@ -15,7 +15,7 @@ import Footer from './components/Footer';
 import LoginPage from './components/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './components/admin/AdminLayout';
-import AdminDashboard from '/Users/nicolasgonzalez/Desktop/dr-smile/src/components/admin/ServicesAdmin.tsx';
+import AdminDashboard from './components/admin/ServicesAdmin';
 import ServicesAdmin from './components/admin/ServicesAdmin';
 import LocationAdmin from './components/admin/LocationAdmin';
 import ContactAdmin from './components/admin/ContactAdmin';
