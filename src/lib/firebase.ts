@@ -4,14 +4,33 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCBRdN3CDpRsrKYcIkdoNHWoNtfeC9E1HI",
-  authDomain: "dr-smile-48406.firebaseapp.com",
-  projectId: "dr-smile-48406",
-  storageBucket: "dr-smile-48406.appspot.com",
-  messagingSenderId: "1081675370474",
-  appId: "1:1081675370474:web:a7961d9b8ed305f1056c93",
-  measurementId: "G-Y4787Q5WE5"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
+
+// Validate config in development
+if (import.meta.env.DEV) {
+  const requiredVars = [
+    'VITE_FIREBASE_API_KEY',
+    'VITE_FIREBASE_AUTH_DOMAIN', 
+    'VITE_FIREBASE_PROJECT_ID',
+    'VITE_FIREBASE_STORAGE_BUCKET',
+    'VITE_FIREBASE_MESSAGING_SENDER_ID',
+    'VITE_FIREBASE_APP_ID'
+  ];
+  
+  const missing = requiredVars.filter(varName => !import.meta.env[varName]);
+  
+  if (missing.length > 0) {
+    console.error('Missing Firebase environment variables:', missing);
+    throw new Error(`Missing Firebase configuration: ${missing.join(', ')}`);
+  }
+}
 
 const app = initializeApp(firebaseConfig);
 
