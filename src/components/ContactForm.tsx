@@ -33,7 +33,6 @@ const ContactForm: React.FC = () => {
         </motion.div>
 
         <div className="max-w-2xl mx-auto">
-          {/* Contact Options */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -89,7 +88,7 @@ const ContactForm: React.FC = () => {
               className="bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-sm"
             >
               <h4 className="text-xl font-semibold mb-6 text-gold text-center">
-                🦷 Consulta gratuita incluye
+                Tu consulta incluye
               </h4>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-3 text-white/80">
@@ -135,24 +134,6 @@ const ContactForm: React.FC = () => {
               <div className="mt-4 text-center">
                 <p className="text-white/60 text-sm">
                   <strong>Horarios:</strong> Lun-Vie 8:00AM-6:00PM | Sáb 8:00AM-2:00PM
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Emergency Notice */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
-                <p className="text-red-400 font-semibold">
-                  🚨 Emergencias dentales 24/7 disponibles
-                </p>
-                <p className="text-red-300 text-sm mt-1">
-                  Para urgencias fuera del horario, contactanos por WhatsApp
                 </p>
               </div>
             </motion.div>

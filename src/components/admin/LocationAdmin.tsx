@@ -27,9 +27,9 @@ const LocationAdmin: React.FC = () => {
     formState: { errors, isDirty }
   } = useForm<LocationData>({
     defaultValues: {
-      address: '',
-      latitude: 3.4516,
-      longitude: -76.5320,
+      address: 'Patios de, Av. 4b Nte. #58N-60 Local 9, Menga, Cali, Valle del Cauca, Colombia',
+      latitude: 3.451611,
+      longitude: -76.532000,
       published: true
     }
   });

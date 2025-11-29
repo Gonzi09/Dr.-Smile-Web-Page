@@ -1,8 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, Instagram, Music2, Shield } from 'lucide-react';
+import { useCollection } from '../hooks/useFirestore';
 
 const Footer: React.FC = () => {
+  // Leer servicios de Firebase (solo los primeros 5 para el footer)
+  const { data: allServices } = useCollection('services', true);
+  const services = allServices.filter((s: any) => s.active).slice(0, 5);
+
   return (
     <footer className="bg-charcoal text-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,7 +20,7 @@ const Footer: React.FC = () => {
             viewport={{ once: true }}
             className="lg:col-span-1"
           >
-            <img src="/src/assets/logo.svg" alt="Dr Smile" className="h-12 mb-6" />
+            <h2 className="text-2xl font-bold text-gold mb-4">Dr Smile</h2>
             <p className="text-white/70 leading-relaxed mb-6">
               Tu sonrisa es nuestra pasión. Transformamos vidas a través de 
               tratamientos dentales de excelencia y cuidado personalizado.
@@ -24,7 +29,7 @@ const Footer: React.FC = () => {
             {/* Social Media */}
             <div className="flex gap-4">
               <motion.a
-                href="https://instagram.com/drsmile"
+                href="https://instagram.com/drsmilecali"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: 15 }}
@@ -33,7 +38,7 @@ const Footer: React.FC = () => {
                 <Instagram size={20} />
               </motion.a>
               <motion.a
-                href="https://tiktok.com/@drsmile"
+                href="https://tiktok.com/@drsmilecali"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: -15 }}
@@ -90,18 +95,10 @@ const Footer: React.FC = () => {
                 <p>Sábados: 8:00 AM - 2:00 PM</p>
                 <p>Domingos: Cerrado</p>
               </div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="bg-gold/20 p-3 rounded-lg mt-4"
-              >
-                <p className="text-gold text-sm font-medium">
-                  🚨 Emergencias 24/7 disponibles
-                </p>
-              </motion.div>
             </div>
           </motion.div>
 
-          {/* Services Quick Links */}
+          {/* Services - Dynamic from Firebase */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -110,21 +107,36 @@ const Footer: React.FC = () => {
           >
             <h3 className="text-xl font-semibold text-gold mb-6">Servicios</h3>
             <div className="space-y-3">
-              <a href="#services" className="block text-white/70 hover:text-gold transition-colors duration-300">
-                Ortodoncia invisible
-              </a>
-              <a href="#services" className="block text-white/70 hover:text-gold transition-colors duration-300">
-                Diseño de sonrisa
-              </a>
-              <a href="#services" className="block text-white/70 hover:text-gold transition-colors duration-300">
-                Blanqueamiento
-              </a>
-              <a href="#services" className="block text-white/70 hover:text-gold transition-colors duration-300">
-                Porcelain Veneers
-              </a>
-              <a href="#services" className="block text-white/70 hover:text-gold transition-colors duration-300">
-                Armonía orofacial
-              </a>
+              {services.length > 0 ? (
+                services.map((service: any) => (
+                  <a 
+                    key={service.id}
+                    href="#services" 
+                    className="block text-white/70 hover:text-gold transition-colors duration-300"
+                  >
+                    {service.title}
+                  </a>
+                ))
+              ) : (
+                // Servicios por defecto si no hay en Firebase
+                <>
+                  <a href="#services" className="block text-white/70 hover:text-gold transition-colors duration-300">
+                    Ortodoncia invisible
+                  </a>
+                  <a href="#services" className="block text-white/70 hover:text-gold transition-colors duration-300">
+                    Diseño de sonrisa
+                  </a>
+                  <a href="#services" className="block text-white/70 hover:text-gold transition-colors duration-300">
+                    Blanqueamiento
+                  </a>
+                  <a href="#services" className="block text-white/70 hover:text-gold transition-colors duration-300">
+                    Porcelain Veneers
+                  </a>
+                  <a href="#services" className="block text-white/70 hover:text-gold transition-colors duration-300">
+                    Armonía orofacial
+                  </a>
+                </>
+              )}
             </div>
           </motion.div>
         </div>
@@ -174,14 +186,6 @@ const Footer: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <motion.a
-            href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-block bg-gold hover:bg-gold/90 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
-          >
-            🦷 Agenda tu consulta gratuita
-          </motion.a>
         </motion.div>
       </div>
     </footer>

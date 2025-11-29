@@ -1,8 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { services } from '../constants/services';
+import { useCollection } from '../hooks/useFirestore';
+import { Loader2 } from 'lucide-react';
 
 const Services: React.FC = () => {
+  // Leer servicios de Firebase (solo los publicados y activos)
+  const { data: allServices, loading, error } = useCollection('services', true);
+  
+  // Filtrar servicios activos
+  const services = allServices.filter((service: any) => service.active);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -21,6 +28,22 @@ const Services: React.FC = () => {
       transition: { duration: 0.6 }
     }
   };
+
+  if (loading) {
+    return (
+      <section id="services" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-12 h-12 animate-spin text-gold" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    console.error('Error loading services:', error);
+  }
 
   return (
     <section id="services" className="py-20 bg-white">
@@ -48,7 +71,7 @@ const Services: React.FC = () => {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {services.map((service) => (
+          {services.map((service: any) => (
             <motion.div
               key={service.id}
               variants={itemVariants}
@@ -63,7 +86,7 @@ const Services: React.FC = () => {
                 transition={{ duration: 0.5 }}
                 className="text-4xl mb-4 text-center"
               >
-                {service.icon}
+                {service.emoji}
               </motion.div>
               
               <h3 className="text-xl font-semibold text-charcoal mb-4 text-center">
@@ -97,7 +120,7 @@ const Services: React.FC = () => {
             whileTap={{ scale: 0.95 }}
             className="btn-primary text-lg"
           >
-            Consulta gratuita
+            Agenda tu consulta
           </motion.a>
         </motion.div>
       </div>

@@ -41,6 +41,11 @@ const AdminLayout: React.FC = () => {
       icon: Briefcase
     },
     {
+    path: '/admin/doctor',
+    label: 'Sobre la Doctora',
+    icon: User
+    },
+    {
       path: '/admin/location',
       label: 'Ubicación',
       icon: MapPin

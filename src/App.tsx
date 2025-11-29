@@ -5,8 +5,9 @@ import { AuthProvider } from './hooks/useAuth';
 // Componentes públicos
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import AboutDoctor from './components/AboutDoctor';
 import Services from './components/Services';
-import Map from './components/Map';
+import LocationMap from './components/LocationMap';
 import Testimonials from './components/Testimonials';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
@@ -15,12 +16,13 @@ import Footer from './components/Footer';
 import LoginPage from './components/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './components/admin/AdminLayout';
-import AdminDashboard from './components/admin/ServicesAdmin';
+import AdminDashboard from './components/admin/AdminDashboard';
 import ServicesAdmin from './components/admin/ServicesAdmin';
+import DoctorAdmin from './components/admin/DoctorAdmin';
 import LocationAdmin from './components/admin/LocationAdmin';
 import ContactAdmin from './components/admin/ContactAdmin';
 
-// Importar estilos (ajusta la ruta según tu estructura)
+// Importar estilos
 import './styles/globals.css'; 
 
 // Componente de sitio público
@@ -30,8 +32,9 @@ const PublicSite: React.FC = () => {
       <Navbar />
       <main>
         <Hero />
+        <AboutDoctor />
         <Services />
-        <Map />
+        <LocationMap />
         <Testimonials />
         <ContactForm />
       </main>
@@ -72,6 +75,7 @@ function App() {
           >
             <Route index element={<AdminDashboard />} />
             <Route path="services" element={<ServicesAdmin />} />
+            <Route path="doctor" element={<DoctorAdmin />} />
             <Route path="location" element={<LocationAdmin />} />
             <Route path="contact" element={<ContactAdmin />} />
             <Route path="gallery" element={<ComingSoon title="Galería" />} />

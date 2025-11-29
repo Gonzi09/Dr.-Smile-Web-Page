@@ -7,7 +7,6 @@ import {
   deleteDoc, 
   query, 
   where, 
-  orderBy, 
   onSnapshot,
   DocumentData,
   QuerySnapshot
@@ -15,7 +14,7 @@ import {
 import { db } from '../lib/firebase';
 import { useAuth } from './useAuth';
 
-export function useCollection(collectionName: string, published = true) {
+export function useCollection(collectionName: string, publishedOnly = true) {
   const [data, setData] = useState<DocumentData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,26 +23,31 @@ export function useCollection(collectionName: string, published = true) {
     let unsubscribe: () => void;
 
     const fetchData = () => {
-      const q = published 
-        ? query(
-            collection(db, collectionName),
-            where('published', '==', true),
-            orderBy('order', 'asc')
-          )
-        : query(collection(db, collectionName), orderBy('updatedAt', 'desc'));
+      const q = publishedOnly 
+        ? query(collection(db, collectionName), where('published', '==', true))
+        : query(collection(db, collectionName));
 
       unsubscribe = onSnapshot(q, 
         (snapshot: QuerySnapshot) => {
-          const documents = snapshot.docs.map(doc => ({
+          let documents = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data()
           }));
+          
+          // Ordenar en memoria
+          documents.sort((a, b) => {
+            if (a.order !== undefined && b.order !== undefined) {
+              return a.order - b.order;
+            }
+            return 0;
+          });
+          
           setData(documents);
           setLoading(false);
         },
-        (error) => {
-          console.error(`Error fetching ${collectionName}:`, error);
-          setError(error.message);
+        (err) => {
+          console.error(`Error fetching ${collectionName}:`, err);
+          setError(err.message);
           setLoading(false);
         }
       );
@@ -54,7 +58,7 @@ export function useCollection(collectionName: string, published = true) {
     return () => {
       if (unsubscribe) unsubscribe();
     };
-  }, [collectionName, published]);
+  }, [collectionName, publishedOnly]);
 
   return { data, loading, error };
 }
@@ -69,17 +73,17 @@ export function useDocument(collectionName: string, docId: string) {
 
     const unsubscribe = onSnapshot(
       doc(db, collectionName, docId),
-      (doc) => {
-        if (doc.exists()) {
-          setData({ id: doc.id, ...doc.data() });
+      (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          setData({ id: docSnapshot.id, ...docSnapshot.data() });
         } else {
           setData(null);
         }
         setLoading(false);
       },
-      (error) => {
-        console.error(`Error fetching document ${docId}:`, error);
-        setError(error.message);
+      (err) => {
+        console.error(`Error fetching document ${docId}:`, err);
+        setError(err.message);
         setLoading(false);
       }
     );
@@ -105,7 +109,20 @@ export function useFirestoreCRUD(collectionName: string) {
       
       const docRef = await addDoc(collection(db, collectionName), docData);
       
-      await logAudit('CREATE', collectionName, docRef.id, data);
+      // Log audit (sin usar variable 'collection' para evitar conflictos)
+      try {
+        await addDoc(collection(db, 'audit_logs'), {
+          action: 'CREATE',
+          collectionName: collectionName,
+          documentId: docRef.id,
+          userId: userData?.uid,
+          userEmail: userData?.email,
+          timestamp: new Date(),
+          changes: data
+        });
+      } catch (auditError) {
+        console.warn('Could not log audit:', auditError);
+      }
       
       return docRef.id;
     } catch (error: any) {
@@ -124,7 +141,20 @@ export function useFirestoreCRUD(collectionName: string) {
       
       await updateDoc(doc(db, collectionName, docId), docData);
       
-      await logAudit('UPDATE', collectionName, docId, data, originalData);
+      // Log audit
+      try {
+        await addDoc(collection(db, 'audit_logs'), {
+          action: 'UPDATE',
+          collectionName: collectionName,
+          documentId: docId,
+          userId: userData?.uid,
+          userEmail: userData?.email,
+          timestamp: new Date(),
+          changes: originalData ? getChanges(originalData, data) : data
+        });
+      } catch (auditError) {
+        console.warn('Could not log audit:', auditError);
+      }
     } catch (error: any) {
       console.error('Error updating document:', error);
       throw error;
@@ -135,28 +165,22 @@ export function useFirestoreCRUD(collectionName: string) {
     try {
       await deleteDoc(doc(db, collectionName, docId));
       
-      await logAudit('DELETE', collectionName, docId);
+      // Log audit
+      try {
+        await addDoc(collection(db, 'audit_logs'), {
+          action: 'DELETE',
+          collectionName: collectionName,
+          documentId: docId,
+          userId: userData?.uid,
+          userEmail: userData?.email,
+          timestamp: new Date()
+        });
+      } catch (auditError) {
+        console.warn('Could not log audit:', auditError);
+      }
     } catch (error: any) {
       console.error('Error deleting document:', error);
       throw error;
-    }
-  };
-
-  const logAudit = async (action: string, collection: string, documentId: string, newData?: any, originalData?: any) => {
-    try {
-      const auditData = {
-        action,
-        collection,
-        documentId,
-        userId: userData?.uid,
-        userEmail: userData?.email,
-        timestamp: new Date(),
-        changes: originalData ? getChanges(originalData, newData) : newData
-      };
-
-      await addDoc(collection(db, 'audit_logs'), auditData);
-    } catch (error) {
-      console.error('Error logging audit:', error);
     }
   };
 
