@@ -1,12 +1,19 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, Instagram, Music2, Shield } from 'lucide-react';
-import { useCollection } from '../hooks/useFirestore';
+import { useCollection, useSettings } from '../hooks/useFirestore';
 
 const Footer: React.FC = () => {
-  // Leer servicios de Firebase (solo los primeros 5 para el footer)
+  // Leer servicios y contacto de Firebase
   const { data: allServices } = useCollection('services', true);
+  const { settings: contactSettings } = useSettings('contact');
+  
+  // Filtrar servicios activos (máximo 5 para el footer)
   const services = allServices.filter((s: any) => s.active).slice(0, 5);
+  
+  // Datos de contacto dinámicos
+  const phoneNumber = contactSettings?.phone || '+57 316 6817878';
+  const emailAddress = contactSettings?.email || 'contacto@drsmile.com';
 
   return (
     <footer className="bg-charcoal text-white py-16">
@@ -60,11 +67,11 @@ const Footer: React.FC = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <Phone size={16} className="text-gold" />
-                <span className="text-white/80">+57 316 6817878</span>
+                <span className="text-white/80">{phoneNumber}</span>
               </div>
               <div className="flex items-center gap-3">
                 <Mail size={16} className="text-gold" />
-                <span className="text-white/80">contacto@drsmile.com</span>
+                <span className="text-white/80">{emailAddress}</span>
               </div>
               <div className="flex items-start gap-3">
                 <MapPin size={16} className="text-gold mt-1" />
@@ -118,7 +125,6 @@ const Footer: React.FC = () => {
                   </a>
                 ))
               ) : (
-                // Servicios por defecto si no hay en Firebase
                 <>
                   <a href="#services" className="block text-white/70 hover:text-gold transition-colors duration-300">
                     Ortodoncia invisible
@@ -150,7 +156,7 @@ const Footer: React.FC = () => {
           className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
         >
           <p className="text-white/60 text-sm mb-4 md:mb-0">
-            © 2024 Dr Smile. Todos los derechos reservados.
+            © 2026 Dr Smile. Todos los derechos reservados.
           </p>
           
           <div className="flex items-center gap-6 text-sm">
@@ -186,6 +192,14 @@ const Footer: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
+          {/* <motion.a
+            href="#contact"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block bg-gold hover:bg-gold/90 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            🦷 Agenda tu consulta gratuita
+          </motion.a> */}
         </motion.div>
       </div>
     </footer>
@@ -193,3 +207,4 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
+

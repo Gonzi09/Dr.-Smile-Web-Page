@@ -40,11 +40,11 @@ const AdminLayout: React.FC = () => {
       label: 'Servicios',
       icon: Briefcase
     },
-    {
-    path: '/admin/doctor',
-    label: 'Sobre la Doctora',
-    icon: User
-    },
+    // {
+    // path: '/admin/doctor',
+    // label: 'Sobre la Doctora',
+    // icon: User
+    // },
     {
       path: '/admin/location',
       label: 'Ubicación',

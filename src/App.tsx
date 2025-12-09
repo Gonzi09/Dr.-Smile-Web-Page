@@ -18,7 +18,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './components/admin/AdminDashboard';
 import ServicesAdmin from './components/admin/ServicesAdmin';
-import DoctorAdmin from './components/admin/DoctorAdmin';
+// import DoctorAdmin from './components/admin/DoctorAdmin';
 import LocationAdmin from './components/admin/LocationAdmin';
 import ContactAdmin from './components/admin/ContactAdmin';
 
@@ -75,7 +75,7 @@ function App() {
           >
             <Route index element={<AdminDashboard />} />
             <Route path="services" element={<ServicesAdmin />} />
-            <Route path="doctor" element={<DoctorAdmin />} />
+            {/* <Route path="doctor" element={<DoctorAdmin />} /> */}
             <Route path="location" element={<LocationAdmin />} />
             <Route path="contact" element={<ContactAdmin />} />
             <Route path="gallery" element={<ComingSoon title="Galería" />} />

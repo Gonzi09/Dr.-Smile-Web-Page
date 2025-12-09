@@ -1,36 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useSettings } from '../hooks/useFirestore';
-import { Award, GraduationCap, Heart, Loader2 } from 'lucide-react';
+import { Award, GraduationCap, Heart } from 'lucide-react';
 
 const AboutDoctor: React.FC = () => {
-  const { settings: doctorSettings, loading } = useSettings('doctor');
-
-  // Valores por defecto
-  const doctorName = doctorSettings?.name || 'Dra. Marcela García';
-  const doctorTitle = doctorSettings?.title || 'Odontóloga Especialista';
-  const doctorImage = doctorSettings?.imageUrl || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600';
-  const doctorBio = doctorSettings?.bio || 'La doctora es odontóloga egresada de la Universidad del Valle. Es especialista en Ortodoncia y Ortopedia Maxilar, y Estética Dental, cuenta con una trayectoria de más de 20 años de experiencia en los cuales ha transformado muchísimas sonrisas.';
-  const doctorPhilosophy = doctorSettings?.philosophy || 'Como especialista, su filosofía es la odontología conservadora y su sinergia con el resto de disciplinas odontológicas, le proporciona a sus pacientes resultados estéticamente satisfactorios y conservadores, mediante la aplicación de la Estética Odontofacial, donde se busca lograr armonía y estética no solo en los dientes sino en todo el rostro.';
-  const yearsExperience = doctorSettings?.yearsExperience || '20+';
-
-  // Si no está publicado, no mostrar la sección
-  if (!loading && doctorSettings && !doctorSettings.published) {
-    return null;
-  }
-
-  if (loading) {
-    return (
-      <section className="py-20 bg-cream">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-12 h-12 animate-spin text-gold" />
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="py-20 bg-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,17 +29,24 @@ const AboutDoctor: React.FC = () => {
           >
             <div>
               <h3 className="text-3xl md:text-4xl font-bold text-gold mb-2">
-                {doctorName}
+                Dra. Marcela García
               </h3>
-              <p className="text-xl text-charcoal/70 mb-6">{doctorTitle}</p>
+              <p className="text-xl text-charcoal/70 mb-6">Odontóloga Especialista</p>
             </div>
 
             <p className="text-lg text-charcoal/80 leading-relaxed">
-              {doctorBio}
+              La doctora Marcela García es odontóloga egresada de la Universidad del Valle. 
+              Es especialista en Ortodoncia y Ortopedia Maxilar, y Estética Dental, cuenta con 
+              una trayectoria de más de 20 años de experiencia en los cuales ha transformado 
+              muchísimas sonrisas.
             </p>
 
             <p className="text-lg text-charcoal/80 leading-relaxed">
-              {doctorPhilosophy}
+              Como especialista, su filosofía es la odontología conservadora y su sinergia con 
+              el resto de disciplinas odontológicas, le proporciona a sus pacientes resultados 
+              estéticamente satisfactorios y conservadores, mediante la aplicación de la Estética 
+              Odontofacial, donde se busca lograr armonía y estética no solo en los dientes sino 
+              en todo el rostro.
             </p>
 
             {/* Stats */}
@@ -77,7 +56,7 @@ const AboutDoctor: React.FC = () => {
                 className="text-center p-4 bg-white rounded-xl shadow-md"
               >
                 <Award className="w-8 h-8 text-gold mx-auto mb-2" />
-                <div className="text-2xl font-bold text-charcoal">{yearsExperience}</div>
+                <div className="text-2xl font-bold text-charcoal">20+</div>
                 <div className="text-sm text-charcoal/60">Años experiencia</div>
               </motion.div>
 
@@ -111,9 +90,13 @@ const AboutDoctor: React.FC = () => {
           >
             <div className="relative z-10">
               <img
-                src={doctorImage}
-                alt={doctorName}
+                src="src/imgs/DRA.jpg"
+                alt="Dra. Marcela García"
                 className="w-full h-[600px] object-cover rounded-2xl shadow-2xl"
+                onError={(e) => {
+                  // Fallback a imagen de placeholder si la URL no carga
+                  (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600';
+                }}
               />
               
               {/* Decorative elements */}

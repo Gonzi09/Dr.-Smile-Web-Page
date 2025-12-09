@@ -1,16 +1,35 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone, MessageCircle, Loader2 } from 'lucide-react';
+import { useSettings } from '../hooks/useFirestore';
 
 const ContactForm: React.FC = () => {
+  const { settings: contactSettings, loading } = useSettings('contact');
+  
+  // Valores dinámicos de Firebase con fallback
+  const whatsapp = contactSettings?.whatsapp || '+573166817878';
+  const phone = contactSettings?.phone || '+573166817878';
+
   const handleWhatsApp = () => {
     const message = encodeURIComponent(`Hola Dr Smile, me interesa agendar una cita. ¡Saludos!`);
-    window.open(`https://wa.me/573166817878?text=${message}`, '_blank');
+    window.open(`https://wa.me/${whatsapp.replace(/\+/g, '')}?text=${message}`, '_blank');
   };
 
   const handleCall = () => {
-    window.location.href = 'tel:+573166817878';
+    window.location.href = `tel:${phone}`;
   };
+
+  if (loading) {
+    return (
+      <section id="contact" className="py-20 bg-charcoal text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-gold" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="contact" className="py-20 bg-charcoal text-white">
@@ -59,7 +78,7 @@ const ContactForm: React.FC = () => {
               <MessageCircle size={32} />
               <div className="text-left">
                 <div className="text-xl font-bold">WhatsApp</div>
-                <div className="text-lg opacity-90">+57 316 6817878</div>
+                <div className="text-lg opacity-90">{whatsapp}</div>
                 <div className="text-sm opacity-75">Respuesta inmediata</div>
               </div>
             </motion.button>
@@ -74,7 +93,7 @@ const ContactForm: React.FC = () => {
               <Phone size={32} />
               <div className="text-left">
                 <div className="text-xl font-bold">Llamar ahora</div>
-                <div className="text-lg opacity-90">+57 316 6817878</div>
+                <div className="text-lg opacity-90">{phone}</div>
                 <div className="text-sm opacity-75">Atención directa</div>
               </div>
             </motion.button>

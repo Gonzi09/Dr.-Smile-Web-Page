@@ -56,34 +56,54 @@ const LocationMap: React.FC = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Map */}
+          {/* Map - Todo clickeable */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="relative"
+            className="relative cursor-pointer group"
+            onClick={handleDirections}
+            title="Haz clic para obtener direcciones"
           >
-            <div className="bg-white p-4 rounded-2xl shadow-2xl">
-              <iframe
-                src={`https://www.google.com/maps?q=${latitude},${longitude}&output=embed&z=18`}
-                width="100%"
-                height="400"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="rounded-xl"
-                title="Ubicación Dr Smile"
-              />
+            <div className="bg-white p-4 rounded-2xl shadow-2xl group-hover:shadow-3xl transition-shadow duration-300">
+              <div className="relative overflow-hidden rounded-xl">
+                <iframe
+                  src={`https://www.google.com/maps?q=${latitude},${longitude}&output=embed&z=18`}
+                  width="100%"
+                  height="400"
+                  style={{ border: 0, pointerEvents: 'none' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="rounded-xl"
+                  title="Ubicación Dr Smile"
+                />
+                
+                {/* Overlay para hacer clickeable */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300 flex items-center justify-center">
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    className="bg-gold/90 text-white px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-lg"
+                  >
+                    <Navigation size={20} />
+                    Obtener direcciones
+                  </motion.div>
+                </div>
+              </div>
             </div>
             
+            {/* Botón flotante adicional */}
             <motion.button
-              onClick={handleDirections}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleOpenInMaps();
+              }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="absolute bottom-8 right-8 bg-gold text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-              title="Obtener direcciones exactas"
+              title="Abrir en Google Maps"
             >
               <Navigation size={24} />
             </motion.button>
