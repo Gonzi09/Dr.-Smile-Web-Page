@@ -29,25 +29,10 @@ const AboutDoctor: React.FC = () => {
           >
             <div>
               <h3 className="text-3xl md:text-4xl font-bold text-gold mb-2">
-                Dra. Marcela García
+                Dra. Gabriela Bernal
               </h3>
-              <p className="text-xl text-charcoal/70 mb-6">Odontóloga Especialista</p>
+              <p className="text-xl text-charcoal/70 mb-6">Ortodoncia y Ortopedia Maxilar</p>
             </div>
-
-            <p className="text-lg text-charcoal/80 leading-relaxed">
-              La doctora Marcela García es odontóloga egresada de la Universidad del Valle. 
-              Es especialista en Ortodoncia y Ortopedia Maxilar, y Estética Dental, cuenta con 
-              una trayectoria de más de 20 años de experiencia en los cuales ha transformado 
-              muchísimas sonrisas.
-            </p>
-
-            <p className="text-lg text-charcoal/80 leading-relaxed">
-              Como especialista, su filosofía es la odontología conservadora y su sinergia con 
-              el resto de disciplinas odontológicas, le proporciona a sus pacientes resultados 
-              estéticamente satisfactorios y conservadores, mediante la aplicación de la Estética 
-              Odontofacial, donde se busca lograr armonía y estética no solo en los dientes sino 
-              en todo el rostro.
-            </p>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 pt-6">
@@ -65,8 +50,8 @@ const AboutDoctor: React.FC = () => {
                 className="text-center p-4 bg-white rounded-xl shadow-md"
               >
                 <GraduationCap className="w-8 h-8 text-gold mx-auto mb-2" />
-                <div className="text-2xl font-bold text-charcoal">U. Valle</div>
-                <div className="text-sm text-charcoal/60">Egresada</div>
+                <div className="text-base font-bold text-charcoal leading-tight">Colegio Odontológico Colombiano</div>
+                <div className="text-sm text-charcoal/60 mt-1">Egresada</div>
               </motion.div>
 
               <motion.div
@@ -90,11 +75,10 @@ const AboutDoctor: React.FC = () => {
           >
             <div className="relative z-10">
               <img
-                src="src/imgs/DRA.jpg"
-                alt="Dra. Marcela García"
+                src="/src/imgs/DRA.jpg"
+                alt="Dra. Gabriela Bernal"
                 className="w-full h-[600px] object-cover rounded-2xl shadow-2xl"
                 onError={(e) => {
-                  // Fallback a imagen de placeholder si la URL no carga
                   (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600';
                 }}
               />

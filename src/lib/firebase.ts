@@ -3,14 +3,15 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
+// Configuración de Firebase del cliente
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyCBRdN3CDpRsrKYcIkdoNHWoNtfeC9E1HI",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "dr-smile-48406.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "dr-smile-48406",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "dr-smile-48406.appspot.com",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "1081675370474",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:1081675370474:web:a7961d9b8ed305f1056c93",
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-Y4787Q5WE5"
+  apiKey: "AIzaSyA06HtsUf7dZxGoXziREXFZel18F4SF9rU",
+  authDomain: "drsmile-9f06b.firebaseapp.com",
+  projectId: "drsmile-9f06b",
+  storageBucket: "drsmile-9f06b.firebasestorage.app",
+  messagingSenderId: "130105074854",
+  appId: "1:130105074854:web:1478fed4c8caa9315ac067",
+  measurementId: "G-3X19G52KRZ"
 };
 
 const app = initializeApp(firebaseConfig);

@@ -73,7 +73,7 @@ const Hero: React.FC = () => {
                 <div className="text-charcoal/60">Pacientes felices</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-gold">15+</div>
+                <div className="text-3xl font-bold text-gold">20+</div>
                 <div className="text-charcoal/60">Años experiencia</div>
               </div>
               <div className="text-center">
