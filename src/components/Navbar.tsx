@@ -33,12 +33,13 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <motion.div
+          <motion.a
+            href="#hero"
             whileHover={{ scale: 1.05 }}
             className="flex items-center"
           >
-            <img src="/src/assets/logo.svg" alt="Dr Smile" className="h-10" />
-          </motion.div>
+            <img src="/DrSmile.png" alt="Dr Smile" className="h-12" />
+          </motion.a>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
