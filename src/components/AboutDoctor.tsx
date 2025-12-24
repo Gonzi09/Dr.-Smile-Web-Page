@@ -75,7 +75,7 @@ const AboutDoctor: React.FC = () => {
           >
             <div className="relative z-10">
               <img
-                src="/src/imgs/DRA.jpg"
+                src="/DRA.jpg"
                 alt="Dra. Gabriela Bernal"
                 className="w-full h-[600px] object-cover rounded-2xl shadow-2xl"
                 onError={(e) => {
